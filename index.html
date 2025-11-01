@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6c5ce7;
-            --primary-dark: #5649c0;
-            --secondary: #fd79a8;
+            --primary: #FF7F32;
+            --primary-dark: #E5671F;
+            --primary-light: #FFA366;
+            --secondary: #FF5722;
             --dark: #2d3436;
             --light: #f5f6fa;
             --gray: #dfe6e9;
@@ -174,8 +175,9 @@
         }
 
         .btn:hover {
-            background-color: #e84393;
+            background-color: #E64A19;
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
         }
 
         .btn-outline {
@@ -194,6 +196,19 @@
             margin: 50px 0 30px;
             font-size: 2rem;
             color: var(--dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
         }
 
         .books-grid {
@@ -426,13 +441,14 @@
         .credit-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow);
+            background-color: white;
         }
 
         .credit-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -501,7 +517,7 @@
         }
 
         .social-links a:hover {
-            color: var(--secondary);
+            color: var(--primary-light);
         }
 
         .copyright {
@@ -532,6 +548,19 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+
+            .nav-links.active {
+                display: flex;
             }
 
             .mobile-menu {
@@ -730,30 +759,30 @@
         let books = [
             {
                 id: 1,
-                title: "Aventuras en la Montaña",
+                title: "El Himno de Metrópolis",
                 price: 12.99,
-                cover: "https://via.placeholder.com/300x400/6c5ce7/ffffff?text=Libro+1",
+                cover: "https://kabertpro.github.io/dreampixstudio/portadas/portada1.png",
                 link: "https://gemini.google.com/share/1d9ac52c4716"
             },
             {
                 id: 2,
                 title: "El Misterio del Océano",
                 price: 14.50,
-                cover: "https://via.placeholder.com/300x400/fd79a8/ffffff?text=Libro+2",
+                cover: "https://kabertpro.github.io/dreampixstudio/portadas/portada2.png",
                 link: "https://gemini.google.com/share/81610e2257d3"
             },
             {
                 id: 3,
                 title: "Viaje al Centro de la Tierra",
                 price: 10.99,
-                cover: "https://via.placeholder.com/300x400/00b894/ffffff?text=Libro+3",
+                cover: "https://kabertpro.github.io/dreampixstudio/portadas/portada3.png",
                 link: "https://gemini.google.com/share/1f7a5f452978"
             },
             {
                 id: 4,
                 title: "La Ciudad Perdida",
                 price: 15.75,
-                cover: "https://via.placeholder.com/300x400/0984e3/ffffff?text=Libro+4",
+                cover: "https://kabertpro.github.io/dreampixstudio/portadas/portada4.png",
                 link: "https://gemini.google.com/share/bfb27e528ba4"
             }
         ];
@@ -844,7 +873,7 @@
         // Alternar menú móvil
         function toggleMobileMenu() {
             const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.classList.toggle('active');
         }
 
         // Renderizar libros en la biblioteca
@@ -886,6 +915,8 @@
                     <div>
                         <h4>${book.title}</h4>
                         <p>Precio: $${book.price.toFixed(2)}</p>
+                        <p>Portada: ${book.cover}</p>
+                        <p>Enlace: ${book.link}</p>
                     </div>
                     <div class="book-item-actions">
                         <button class="btn btn-small edit-book" data-id="${book.id}">Editar</button>
